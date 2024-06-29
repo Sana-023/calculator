@@ -32,7 +32,30 @@
  }
 
  function solve(){
-    equation= eval(equation);
+    try{
+        let answer = eval(equation);
+        if(answer==undefined) throw SyntaxError;
+        equation=answer;
+
+    } catch(error){
+        let output = document.getElementById('output')
+        output?.classList.add('bg-red-400');
+
+        setTimeout(()=> {
+            output?.classList.remove('bg-red-400');
+        }, 700);
+    } 
+ }
+
+ function onkeyDown(e: KeyboardEvent){
+    let button =document.getElementById(e.key);
+    button?.click();
+    button?.focus();
+    setTimeout(()=> {
+           document.activeElement?.blur();
+        }, 500);
+
+
  }
 
 
@@ -42,52 +65,56 @@
     <title> Calculator </title>
 </svelte:head>
 
+<svelte:window on:keydown|preventDefult={onkeyDown}/>
+
     <div
      class=" bg-white h-fit w-fit rounded-3xl grid grid-cols-4  gap-1 p-6 font-semibold text-xl shadow-2xl max-w-[16rem] ">
 
-        <div class= "bg-slate-400  rounded-xl col-span-4 h-12 flex items-center px-4 mb-2  text-white  text-lg  overflow-x-auto " >
+        <div 
+        id="output"
+        class= "bg-slate-400  rounded-xl col-span-4 h-12 flex items-center px-4 mb-2  text-white  text-lg  overflow-x-auto  transition-all" >
             {equation}
 
         </div>
 
-        <button on:click={clear} class="bg-slate-50  "> AC </button>
+        <button id="Delete" on:click={clear} class="bg-slate-50  "> AC </button>
 
-        <button on:click={()=> backspace()} class="bg-slate-50 "> 
+        <button id="Backspace" on:click={()=> backspace()} class="bg-slate-50 "> 
             <Backspace/>
         </button>
 
-        <button  on:click={()=> addToEquation(' / 100')} class="bg-slate-50"> % </button>
+        <button id="%" on:click={()=> addToEquation(' / 100')} class="bg-slate-50"> % </button>
 
-        <button on:click={()=> addToEquation(' + ')} class=" bg-lime-100  text-gray-600">  
+        <button id="+" on:click={()=> addToEquation(' + ')} class=" bg-lime-100  text-gray-600">  
             <Plus/>
          </button>
 
         
         
-        <button on:click={()=> addToEquation('7')}> 7 </button>
-        <button on:click={()=> addToEquation('8')}> 8 </button>
-        <button on:click={()=> addToEquation('9')}> 9 </button>
-        <button on:click={()=> addToEquation(' - ')} class="bg-violet-100  text-gray-600 "> 
+        <button id="7" on:click={()=> addToEquation('7')}> 7 </button>
+        <button id="8" on:click={()=> addToEquation('8')}> 8 </button>
+        <button id="9" on:click={()=> addToEquation('9')}> 9 </button>
+        <button id="-" on:click={()=> addToEquation(' - ')} class="bg-violet-100  text-gray-600 "> 
             <Minus/>
         </button>
 
-        <button on:click={()=> addToEquation('4')}> 4 </button>
-        <button on:click={()=> addToEquation('5')}> 5 </button>
-        <button on:click={()=> addToEquation('6')}> 6 </button>
-        <button on:click={()=> addToEquation(' / ')} class="bg-rose-100  text-gray-600">  
+        <button id="4" on:click={()=> addToEquation('4')}> 4 </button>
+        <button id="5" on:click={()=> addToEquation('5')}> 5 </button>
+        <button id="6" on:click={()=> addToEquation('6')}> 6 </button>
+        <button id="/" on:click={()=> addToEquation(' / ')} class="bg-rose-100  text-gray-600">  
           <Divide/>  
         </button>
 
-        <button on:click={()=> addToEquation('1')}> 1 </button>
-        <button on:click={()=> addToEquation('2')}> 2 </button>
-        <button on:click={()=> addToEquation('3')}> 3 </button>
-        <button  on:click={()=> addToEquation(' * ')} class=" bg-sky-100  text-gray-600"> 
+        <button id="1" on:click={()=> addToEquation('1')}> 1 </button>
+        <button id="2" on:click={()=> addToEquation('2')}> 2 </button>
+        <button id="3" on:click={()=> addToEquation('3')}> 3 </button>
+        <button id="*" on:click={()=> addToEquation(' * ')} class=" bg-sky-100  text-gray-600"> 
             <Multy/>
         </button>
 
-        <button on:click={()=> addToEquation('.')}> . </button>
-        <button on:click={()=> addToEquation('0')}> 0 </button>
-        <button on:click={()=> solve()} class="bg-slate-50 col-span-2"> = </button>
+        <button id="." on:click={()=> addToEquation('.')}> . </button>
+        <button id="0" on:click={()=> addToEquation('0')}> 0 </button>
+        <button id="=" on:click={()=> solve()} class="bg-slate-50 col-span-2"> = </button>
         
 
 
