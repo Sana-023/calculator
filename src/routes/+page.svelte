@@ -5,6 +5,8 @@
  import Multy from "$lib/icons/Multy.svelte";
  import Plus from "$lib/icons/Plus.svelte";
  import Backspace from "$lib/icons/Backspace.svelte";
+ 
+ import {onMount} from "svelte";
 
  
  let equation: string="";
@@ -48,15 +50,16 @@
  }
 
  function onkeyDown(e: KeyboardEvent){
+    
     let button =document.getElementById(e.key);
     button?.click();
     button?.focus();
     setTimeout(()=> {
            document.activeElement?.blur();
         }, 500);
-
-
  }
+
+
 
 
 </script>
